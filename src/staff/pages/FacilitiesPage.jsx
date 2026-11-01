@@ -24,7 +24,7 @@ export default function FacilitiesPage() {
 
     return (
         <>
-            <PageHeader title={tr('Facilities')} subtitle={tr('{f} facilities · {u} storage units', { f: all.length, u: allUnits.length })}>
+            <PageHeader title={tr('Facilities')} subtitle={`${tr(all.length === 1 ? '{n} facility' : '{n} facilities', { n: all.length })} · ${tr('{n} storage unit{n:s}', { n: allUnits.length })}`}>
                 {isAdmin && <Link to="/admin/facilities/new" className="se-btn se-btn-primary"><Icon name="building" size={16} /> {tr('Add facility')}</Link>}
             </PageHeader>
             <div className="sa-stats">

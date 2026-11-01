@@ -142,7 +142,7 @@ function SignContract({ reservation, contract, locked }) {
                 <div className="sa-contract-summary">
                     <dl className="se-kv">
                         <div><dt>{tr('Unit')}</dt><dd>{contract.unitCode} · {reservation.unitTypeName}</dd></div>
-                        <div><dt>{tr('Term')}</dt><dd>{formatDate(contract.startDate)} → {formatDate(contract.endDate)} ({tr('{n} months', { n: reservation.rentalMonths })})</dd></div>
+                        <div><dt>{tr('Term')}</dt><dd>{formatDate(contract.startDate)} → {formatDate(contract.endDate)} ({tr('{n} month{n:s}', { n: reservation.rentalMonths })})</dd></div>
                         <div><dt>{tr('Monthly rent')}</dt><dd>{formatVnd(contract.monthlyRent)}</dd></div>
                         <div><dt>{tr('Deposit')}</dt><dd>{formatVnd(contract.depositAmount)}</dd></div>
                         <div><dt>{tr('Rent due')}</dt><dd>{tr('Day {day} of each month', { day: contract.paymentDay })}</dd></div>
@@ -355,7 +355,7 @@ function ActiveRentals() {
                     <div className="sa-card-title"><h2>{current.customerName} → Unit {current.unitCode}</h2><span className="sa-muted">{current.contractNumber}</span></div>
                     <dl className="se-kv">
                         <div><dt>{tr('Contract status')}</dt><dd><Status value={current.status} /></dd></div>
-                        <div><dt>{tr('Payment status')}</dt><dd>{owing?.length ? `${tr(owing.length > 1 ? '{n} open invoices' : '{n} open invoice', { n: owing.length })}${overdue ? tr(' · overdue') : ''}` : tr('Paid up')}</dd></div>
+                        <div><dt>{tr('Payment status')}</dt><dd>{owing?.length ? `${tr('{n} open invoice{n:s}', { n: owing.length })}${overdue ? tr(' · overdue') : ''}` : tr('Paid up')}</dd></div>
                         <div><dt>{tr('Access code')}</dt><dd>{code.data?.isActive ? tr('Active · expires {date}', { date: formatDate(code.data.expiresAt) }) : tr('No active code')}</dd></div>
                     </dl>
                     <div className={`sa-eligibility ${eligible ? 'ok' : 'no'}`}>

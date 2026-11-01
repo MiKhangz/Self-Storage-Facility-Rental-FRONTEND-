@@ -80,7 +80,7 @@ export default function OverdueCasesPage() {
                         <p className="sa-muted"><Link to={`/admin/customers/${current.customerId}`} className="se-link">{tr('Customer profile')}</Link> · Unit {current.unitCode} · {current.contractNumber}</p>
                         <dl className="se-kv">
                             <div><dt>{tr('Stage')}</dt><dd><Status value={current.resolvedAt ? 'Resolved' : current.stage} /></dd></div>
-                            <div><dt>{tr('Overdue since')}</dt><dd>{formatDate(current.overdueSince)} · {tr('{n} days', { n: current.daysOverdue })}</dd></div>
+                            <div><dt>{tr('Overdue since')}</dt><dd>{formatDate(current.overdueSince)} · {tr('{n} day{n:s}', { n: current.daysOverdue })}</dd></div>
                             <div><dt>{tr('Invoice')}</dt><dd>{current.invoiceId ? <Link to={`/admin/payments?invoiceId=${current.invoiceId}`} className="se-link">{current.invoiceNumber}</Link> : '—'}</dd></div>
                             <div><dt>{tr('Outstanding')}</dt><dd>{formatVnd(current.outstanding ?? 0)}</dd></div>
                             <div><dt>{tr('Late fee')}</dt><dd>{formatVnd(current.lateFeeAmount)}</dd></div>

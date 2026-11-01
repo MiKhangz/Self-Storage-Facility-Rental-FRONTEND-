@@ -161,7 +161,7 @@ export default function ReservationsPage() {
                                     <td>{r.unitTypeName}{r.unitCode ? ` · ${r.unitCode}` : ''}</td>
                                     <td>{r.facilityName}</td>
                                     <td>{formatDate(r.moveInDate)}</td>
-                                    <td>{tr('{n} months', { n: r.rentalMonths })}</td>
+                                    <td>{tr('{n} month{n:s}', { n: r.rentalMonths })}</td>
                                     <td>{waitingForUnit(r) && canAssign && <button type="button" className="se-btn se-btn-outline se-btn-sm">{tr('Assign')}</button>}</td>
                                 </tr>
                             ))}

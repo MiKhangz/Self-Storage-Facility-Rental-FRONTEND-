@@ -71,7 +71,7 @@ function FloorRow({ floor, onChanged }) {
     return (
         <li className="sa-floor-row">
             <span><strong>{tr('Floor')} {floor.floorNumber}{floor.name ? ` · ${floor.name}` : ''}</strong>
-                <small>{tr('{n} units', { n: floor.unitCount })}{rented ? ` · ${tr('{n} rented', { n: floor.rentedUnits })}` : ''}</small></span>
+                <small>{tr('{n} unit{n:s}', { n: floor.unitCount })}{rented ? ` · ${tr('{n} rented', { n: floor.rentedUnits })}` : ''}</small></span>
             <span className={`se-badge ${tone}`}>{tr(label)}</span>
             <button type="button" className="se-btn se-btn-ghost sa-btn-sm" aria-label={`Edit floor ${floor.floorNumber}`}
                 onClick={() => setForm({ floorNumber: String(floor.floorNumber), name: floor.name ?? '', status: floor.status })}>{tr('Edit')}</button>

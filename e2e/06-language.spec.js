@@ -22,12 +22,6 @@ test('E17 an admin switches the staff portal to Vietnamese and every page still 
   for (const [, vi] of PAGES) {
     await page.getByRole('navigation').getByRole('link', { name: new RegExp(`^${vi}( \\d+)?$`) }).click()
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-    if (process.env.E2E_I18N_REPORT) {
-      // Lines with English words and no Vietnamese letters: a list to review, not a failure.
-      const lines = (await page.locator('main').innerText()).split('\n').map((l) => l.trim())
-      const english = [...new Set(lines.filter((l) => /[A-Za-z]{3,} [A-Za-z]{3,}/.test(l) && !/[À-ỹ]/.test(l)))]
-      if (english.length) console.log(`${vi}:`, english.slice(0, 20))
-    }
   }
   expect(errors).toEqual([])
 

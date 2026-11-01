@@ -42,7 +42,7 @@ export default function CustomerPage() {
             <PageHeader title={name} subtitle={`${tr('Customer')} #${customerId}`} />
             <div className="sa-stats">
                 <Stat icon="box" label="Active units" value={active.length} note={active.map((c) => c.unitCode).join(' · ') || '—'} />
-                <Stat icon="card" label="Lifetime paid" value={formatVnd(invoices.reduce((s, i) => s + (i.paidAmount ?? 0), 0))} note={tr('{n} invoices', { n: invoices.length })} />
+                <Stat icon="card" label="Lifetime paid" value={formatVnd(invoices.reduce((s, i) => s + (i.paidAmount ?? 0), 0))} note={tr('{n} invoice{n:s}', { n: invoices.length })} />
                 <Stat icon="clock" tone={open.some((i) => i.status === 'Overdue') ? 'bad' : ''} label="Outstanding" value={formatVnd(open.reduce((s, i) => s + (i.outstandingAmount ?? 0), 0))} note={open[0] ? tr('due {date}', { date: formatDate(open[0].dueDate) }) : tr('nothing due')} />
                 <Stat icon="check" label="On-time payments" value={onTime == null ? '—' : `${onTime}%`} />
             </div>

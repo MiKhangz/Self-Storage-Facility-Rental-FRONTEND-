@@ -22,6 +22,8 @@ export const portalOf = (path) => (path.startsWith('/admin') ? 'staff' : 'custom
 
 api.interceptors.request.use((config) => {
   config.headers['X-Portal'] = portalOf(window.location.pathname)
+  // LanguageProvider keeps this attribute on the language in use; the API answers its errors in it.
+  config.headers['Accept-Language'] = document.documentElement.lang
   return config
 })
 
@@ -39,6 +41,8 @@ api.interceptors.response.use(
   },
 )
 
+const english = () => document.documentElement.lang === 'en'
+
 /** @typedef {{ title?: string, errors?: Object<string, string[]> }} ProblemDetails RFC 7807 error body */
 
 /**
@@ -48,12 +52,12 @@ api.interceptors.response.use(
  */
 export function errorMessage(error) {
   if (axios.isAxiosError(error)) {
-    if (!error.response) return 'Không kết nối được máy chủ. Vui lòng thử lại.'
+    if (!error.response) return english() ? 'Could not reach the server. Please try again.' : 'Không kết nối được máy chủ. Vui lòng thử lại.'
     /** @type {ProblemDetails|undefined} */
     const problem = error.response.data
     const fieldErrors = problem?.errors ? Object.values(problem.errors).flat() : []
     if (fieldErrors.length) return fieldErrors.join(' ')
     if (problem?.title) return problem.title
   }
-  return 'Đã có lỗi xảy ra. Vui lòng thử lại.'
+  return english() ? 'Something went wrong. Please try again.' : 'Đã có lỗi xảy ra. Vui lòng thử lại.'
 }

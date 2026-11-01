@@ -91,7 +91,7 @@ export default function UnitsPage() {
 
     return (
         <>
-            <PageHeader title={tr('Storage units')} subtitle={`${tr('{n} units', { n: all.length })}${facilityId ? '' : tr(' across all facilities')}`} />
+            <PageHeader title={tr('Storage units')} subtitle={`${tr('{n} unit{n:s}', { n: all.length })}${facilityId ? '' : tr(' across all facilities')}`} />
             <div className="sa-chip-row" role="tablist">
                 <button type="button" role="tab" aria-selected={!status} className={!status ? 'active' : ''} onClick={() => setStatus('')}>{tr('All')} <b>{all.length}</b></button>
                 {STATUSES.map((s) => (

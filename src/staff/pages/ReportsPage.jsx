@@ -69,8 +69,8 @@ export default function ReportsPage() {
             <div className="sa-stats">
                 <Stat icon="check" label={tr('Collected ({month})', { month })} value={formatVnd(r.collected ?? 0)} note={r.refunded ? tr('{amount} refunded', { amount: formatVnd(r.refunded) }) : ''} />
                 <Stat icon="card" label="Net revenue" value={formatVnd(r.net ?? 0)} />
-                <Stat icon="clock" tone="bad" label="Outstanding now" value={formatVnd(d.outstandingAmount ?? 0)} note={tr('{n} open overdue cases', { n: d.openOverdueCases ?? 0 })} />
-                <Stat icon="grid" label="Occupancy now" value={`${Math.round(d.occupancyRate ?? 0)}%`} note={tr('{used} of {total} units', { used: d.occupiedUnits ?? 0, total: d.totalUnits ?? 0 })} />
+                <Stat icon="clock" tone="bad" label="Outstanding now" value={formatVnd(d.outstandingAmount ?? 0)} note={tr('{n} open overdue case{n:s}', { n: d.openOverdueCases ?? 0 })} />
+                <Stat icon="grid" label="Occupancy now" value={`${Math.round(d.occupancyRate ?? 0)}%`} note={tr('{used} of {total} unit{total:s}', { used: d.occupiedUnits ?? 0, total: d.totalUnits ?? 0 })} />
             </div>
             <section className="se-panel" style={{ marginBottom: 20 }}>
                 <div className="sa-card-title"><h2>{tr('Net revenue by facility ({month})', { month })}</h2></div>
@@ -96,7 +96,7 @@ export default function ReportsPage() {
                         ))}
                         <TableState query={occupancy} rows={rows} cols={6} empty="No facilities in your scope." />
                     </tbody>
-                    <tfoot><tr><td className="strong">{tr('Total')} · {tr('{n} facilities', { n: rows.length })}</td><td>{d.occupiedUnits ?? 0} / {d.totalUnits ?? 0}</td><td>{Math.round(d.occupancyRate ?? 0)}%</td>
+                    <tfoot><tr><td className="strong">{tr('Total')} · {tr(rows.length === 1 ? '{n} facility' : '{n} facilities', { n: rows.length })}</td><td>{d.occupiedUnits ?? 0} / {d.totalUnits ?? 0}</td><td>{Math.round(d.occupancyRate ?? 0)}%</td>
                         <td className="price">{formatVnd(r.collected ?? 0)}</td><td>{formatVnd(r.refunded ?? 0)}</td><td>{formatVnd(r.net ?? 0)}</td></tr></tfoot>
                 </table>
             </div>

@@ -53,7 +53,7 @@ function ContractPanel({ contract, invoices, onClose }) {
             {due > 0 && (
                 <div className={`sa-eligibility ${oldest ? 'no' : ''}`}>
                     <small>{tr('Total due')}</small><strong>{formatVnd(due)}</strong>
-                    {oldest && <small>{tr('{n} days overdue since {date}', { n: daysBetween(oldest.dueDate, today), date: formatDate(oldest.dueDate) })}</small>}
+                    {oldest && <small>{tr('{n} day{n:s} overdue since {date}', { n: daysBetween(oldest.dueDate, today), date: formatDate(oldest.dueDate) })}</small>}
                 </div>
             )}
             <dl className="se-kv">
@@ -116,7 +116,7 @@ function RenewalRequests() {
                             <tr key={r.renewalId}>
                                 <td className="strong">{r.contractNumber}</td>
                                 <td>{r.unitCode}</td>
-                                <td>{tr(r.extendMonths > 1 ? '{n} months' : '{n} month', { n: r.extendMonths })}</td>
+                                <td>{tr('{n} month{n:s}', { n: r.extendMonths })}</td>
                                 <td>{formatDate(r.currentEndDate)} → <strong>{formatDate(r.newEndDate)}</strong></td>
                                 <td>{formatVnd(r.currentMonthlyRent)} → <strong>{formatVnd(r.newMonthlyRent)}</strong></td>
                                 <td>{formatDate(r.requestedAt)}</td>
