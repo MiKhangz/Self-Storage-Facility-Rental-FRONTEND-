@@ -66,7 +66,7 @@ export default function CustomerPage() {
                         </tbody></table>
                 )}
                 {tab === 'Payments' && (
-                    <table className="se-table"><thead><tr><th>{tr('Invoice')}</th><th>{tr('Issued')}</th><th>{tr('Due')}</th><th>{tr('Total')}</th><th>{tr('Paid')}</th><th>{tr('Status')}</th></tr></thead>
+                    <table className="se-table"><thead><tr><th>{tr('Invoice')}</th><th>{tr('Issue date')}</th><th>{tr('Due')}</th><th>{tr('Total')}</th><th>{tr('Paid')}</th><th>{tr('Status')}</th></tr></thead>
                         <tbody>
                             {invoices.map((i) => <tr key={i.invoiceId}><td className="strong">{i.invoiceNumber}</td><td>{formatDate(i.issueDate)}</td><td>{formatDate(i.dueDate)}</td><td className="price">{formatVnd(i.totalAmount)}</td><td>{formatVnd(i.paidAmount)}</td><td><Status value={i.status} /></td></tr>)}
                             <TableState rows={invoices} cols={6} empty="No invoices." />

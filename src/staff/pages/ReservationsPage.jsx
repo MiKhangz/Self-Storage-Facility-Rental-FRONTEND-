@@ -93,7 +93,7 @@ function AssignPanel({ reservation, onClose }) {
                 <h2>{reservation.reservationCode} <Status value={reservation.status} /></h2>
                 <button type="button" className="sa-close" onClick={onClose} aria-label={tr('Close')}><Icon name="arrowLeft" size={16} /></button>
             </div>
-            <p className="sa-muted">Created {formatDateTime(reservation.createdAt)}</p>
+            <p className="sa-muted">{tr('Created {time}', { time: formatDateTime(reservation.createdAt) })}</p>
             <dl className="se-kv">
                 <div><dt>{tr('Customer')}</dt><dd>{reservation.customerName}</dd></div>
                 <div><dt>{tr('Facility')}</dt><dd>{reservation.facilityName}</dd></div>
@@ -161,7 +161,7 @@ export default function ReservationsPage() {
                                     <td>{r.unitTypeName}{r.unitCode ? ` · ${r.unitCode}` : ''}</td>
                                     <td>{r.facilityName}</td>
                                     <td>{formatDate(r.moveInDate)}</td>
-                                    <td>{r.rentalMonths} mo</td>
+                                    <td>{tr('{n} months', { n: r.rentalMonths })}</td>
                                     <td>{waitingForUnit(r) && canAssign && <button type="button" className="se-btn se-btn-outline se-btn-sm">{tr('Assign')}</button>}</td>
                                 </tr>
                             ))}

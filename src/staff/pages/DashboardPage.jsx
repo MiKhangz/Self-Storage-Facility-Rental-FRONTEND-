@@ -38,6 +38,7 @@ export default function DashboardPage() {
     const active = allContracts.filter((c) => c.status === 'Active');
     const overdue = allInvoices.filter((i) => i.status === 'Overdue');
     const paidInMonth = (m) => allInvoices.filter((i) => i.issueDate?.startsWith(m)).reduce((s, i) => s + (i.paidAmount ?? 0), 0);
+    const monthLabel = (i) => (lang === 'vi' ? `T${i + 1}` : MONTHS[i]);
     const revenue = MONTHS.map((_, i) => paidInMonth(`${year}-${String(i + 1).padStart(2, '0')}`));
     const maxRevenue = Math.max(...revenue, 1);
     const urgent = (tickets.data ?? []).filter((t) => t.priority === 'Urgent' && !['Resolved', 'Closed'].includes(t.status));
@@ -76,9 +77,9 @@ export default function DashboardPage() {
                     <div className="sa-card-title"><h2>{tr('Monthly revenue {year}', { year })}</h2><span className="sa-muted">{tr('Paid amount by invoice month')}</span></div>
                     <div className="sa-bars" role="img" aria-label={`Revenue per month in ${year}`}>
                         {revenue.map((v, i) => (
-                            <div key={i} className="sa-bar" title={`${tr(MONTHS[i])}: ${formatVnd(v)}`}>
+                            <div key={i} className="sa-bar" title={`${monthLabel(i)}: ${formatVnd(v)}`}>
                                 <span style={{ height: `${(v / maxRevenue) * 100}%` }} className={i === Number(month.slice(5)) - 1 ? 'current' : ''} />
-                                <small>{tr(MONTHS[i])}</small>
+                                <small>{monthLabel(i)}</small>
                             </div>
                         ))}
                     </div>

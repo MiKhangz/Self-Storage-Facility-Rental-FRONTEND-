@@ -131,7 +131,7 @@ export default function UnitsPage() {
                 </div>
                 {unit && (
                     <aside className="se-panel sa-side-panel">
-                        <div className="sa-card-title"><h2>Unit {unit.unitCode} <Status value={unit.status} /></h2>
+                        <div className="sa-card-title"><h2>{tr('Unit')} {unit.unitCode} <Status value={unit.status} /></h2>
                             <button type="button" className="sa-close" onClick={() => setSelected(null)} aria-label={tr('Close')}><Icon name="arrowLeft" size={16} /></button></div>
                         <dl className="se-kv">
                             <div><dt>{tr('Size')}</dt><dd>{unit.unitTypeName} · {unit.areaM2} m²</dd></div>

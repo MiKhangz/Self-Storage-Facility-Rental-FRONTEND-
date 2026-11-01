@@ -142,7 +142,7 @@ function SignContract({ reservation, contract, locked }) {
                 <div className="sa-contract-summary">
                     <dl className="se-kv">
                         <div><dt>{tr('Unit')}</dt><dd>{contract.unitCode} · {reservation.unitTypeName}</dd></div>
-                        <div><dt>{tr('Term')}</dt><dd>{formatDate(contract.startDate)} → {formatDate(contract.endDate)} ({reservation.rentalMonths} months)</dd></div>
+                        <div><dt>{tr('Term')}</dt><dd>{formatDate(contract.startDate)} → {formatDate(contract.endDate)} ({tr('{n} months', { n: reservation.rentalMonths })})</dd></div>
                         <div><dt>{tr('Monthly rent')}</dt><dd>{formatVnd(contract.monthlyRent)}</dd></div>
                         <div><dt>{tr('Deposit')}</dt><dd>{formatVnd(contract.depositAmount)}</dd></div>
                         <div><dt>{tr('Rent due')}</dt><dd>{tr('Day {day} of each month', { day: contract.paymentDay })}</dd></div>
@@ -212,7 +212,7 @@ function HandoverWizard({ reservation, contract, onCompleted }) {
                                     ? <button type="button" className="se-btn se-btn-ghost" onClick={() => setLockFor(null)}>{tr('Undo')}</button>
                                     : <button type="button" className="se-btn se-btn-primary" onClick={() => setLockFor(reservation.storageUnitId)}>{tr('Confirm lock given')}</button>}
                             </div>
-                            {lockGiven && <small className="sa-muted">Lock {reservation.unitCode} given to the customer.</small>}
+                            {lockGiven && <small className="sa-muted">{tr('Lock {code} given to the customer.', { code: reservation.unitCode })}</small>}
                         </div>
                     </div>
                     <label><span className="se-label">{tr("Condition note (optional, shown again at the return inspection)")}</span><textarea className="se-textarea" rows={2} maxLength={300} value={form.conditionNote} onChange={(e) => set({ conditionNote: e.target.value })} /></label>

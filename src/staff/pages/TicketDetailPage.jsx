@@ -29,7 +29,7 @@ function OrderRepair({ ticket }) {
     });
     return (
         <>
-            {create.isSuccess && <div className="se-alert info" role="status">Maintenance order created for unit {ticket.unitCode}.</div>}
+            {create.isSuccess && <div className="se-alert info" role="status">{tr('Maintenance order created for unit {code}.', { code: ticket.unitCode })}</div>}
             <button type="button" className="se-btn se-btn-ghost se-btn-block" onClick={() => setOpen(true)}>{tr('Order maintenance for {code}', { code: ticket.unitCode })}</button>
             {open && (
                 <Modal onClose={() => setOpen(false)}>

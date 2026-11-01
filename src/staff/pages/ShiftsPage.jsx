@@ -94,7 +94,7 @@ export default function ShiftsPage() {
                                             {mine.map((s) => (
                                                 <div key={s.shiftId} className={`sa-shift ${s.shiftType}`}>
                                                     <strong>{s.startTime.slice(0, 5)}–{s.endTime.slice(0, 5)}</strong>
-                                                    <small>{tasks.filter((t) => t.shiftId === s.shiftId).length} tasks</small>
+                                                    <small>{tr('{n} tasks', { n: tasks.filter((t) => t.shiftId === s.shiftId).length })}</small>
                                                     {canWrite && <button type="button" aria-label={tr("Remove {name}'s shift on {date}", { name, date: formatDate(d) })} onClick={() => window.confirm(tr('Remove this shift?')) && remove.mutate(s.shiftId)}>×</button>}
                                                 </div>
                                             ))}

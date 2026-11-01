@@ -48,7 +48,7 @@ function PriceRow({ policy, type, price, editable }) {
             <td>
                 {editable && (changed || !price) && (
                     <button type="button" className="se-btn se-btn-primary se-btn-sm" disabled={save.isPending || !Number(row.basePricePerMonth)} onClick={() => save.mutate()}>
-                        {save.isPending ? tr('Saving…') : 'Save'}
+                        {save.isPending ? tr('Saving…') : tr('Save')}
                     </button>
                 )}
                 {save.isError && <div className="sa-bad">{errorMessage(save.error)}</div>}

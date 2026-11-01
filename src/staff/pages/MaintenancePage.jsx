@@ -65,7 +65,7 @@ function OrderPanel({ order, canWrite, onClose }) {
 
     return (
         <aside className="se-panel sa-side-panel">
-            <div className="sa-card-title"><h2>Unit {order.unitCode} <Status value={order.status} /></h2><button type="button" className="sa-close" onClick={onClose} aria-label={tr('Close')}><Icon name="arrowLeft" size={16} /></button></div>
+            <div className="sa-card-title"><h2>{tr('Unit')} {order.unitCode} <Status value={order.status} /></h2><button type="button" className="sa-close" onClick={onClose} aria-label={tr('Close')}><Icon name="arrowLeft" size={16} /></button></div>
             <p>{order.description}</p>
             <dl className="se-kv">
                 <div><dt>{tr('Planned for')}</dt><dd>{order.scheduledAt ? formatDate(order.scheduledAt) : '—'}</dd></div>

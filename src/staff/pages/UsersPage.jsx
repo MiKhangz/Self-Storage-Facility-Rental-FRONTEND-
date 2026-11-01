@@ -18,7 +18,7 @@ const STATUSES = ['Active', 'Disabled'];
 
 export function PermissionMatrix({ highlight, search = '' }) {
     const tr = useT();
-    const rows = PERMISSIONS.filter((p) => matches(search, p.feature, p.group));
+    const rows = PERMISSIONS.filter((p) => matches(search, tr(p.feature), tr(p.group)));
     return (
         <div className="se-table-wrap">
             <table className="se-table sa-matrix">
@@ -34,7 +34,7 @@ export function PermissionMatrix({ highlight, search = '' }) {
                             ))}
                         </tr>
                     ))}
-                    {!rows.length && <tr><td colSpan={ROLE_INFO.length + 1} className="sa-muted">No feature matches “{search}”.</td></tr>}
+                    {!rows.length && <tr><td colSpan={ROLE_INFO.length + 1} className="sa-muted">{tr('No feature matches “{search}”.', { search })}</td></tr>}
                 </tbody>
             </table>
         </div>
@@ -82,7 +82,7 @@ function EditUser({ user, managed, onClose }) {
 
     return (
         <aside className="se-panel sa-side-panel">
-            <div className="sa-card-title"><h2>Edit {user.fullName}</h2><button type="button" className="sa-close" onClick={onClose} aria-label={tr('Close')}><Icon name="arrowLeft" size={16} /></button></div>
+            <div className="sa-card-title"><h2>{tr('Edit {name}', { name: user.fullName })}</h2><button type="button" className="sa-close" onClick={onClose} aria-label={tr('Close')}><Icon name="arrowLeft" size={16} /></button></div>
             <p className="sa-muted">{user.email}</p>
             {isManager ? (
                 <p className="se-hint">{self ? tr('Only a system administrator can change your own facilities.') : tr('You can add or remove the facilities you manage.')}</p>
@@ -92,7 +92,7 @@ function EditUser({ user, managed, onClose }) {
             <label><span className="se-label">{tr('Role')}</span>
                 <div className="se-field"><select value={form.role} disabled={self} onChange={(e) => setForm({ ...form, role: e.target.value })}>{ROLE_INFO.map((r) => <option key={r.role} value={r.role}>{tr(r.title)}</option>)}</select></div></label>
             <label><span className="se-label">{tr('Status')}</span>
-                <div className="se-field"><select value={form.status} disabled={self} onChange={(e) => setForm({ ...form, status: e.target.value })}>{STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}</select></div>
+                <div className="se-field"><select value={form.status} disabled={self} onChange={(e) => setForm({ ...form, status: e.target.value })}>{STATUSES.map((s) => <option key={s} value={s}>{tr(s)}</option>)}</select></div>
                 <p className="se-hint">{self ? tr('You cannot change your own role or status.') : tr('Disabled accounts cannot sign in or be assigned work.')}</p></label>
             </>)}
             <FacilityPicker value={facilityIds} onChange={setFacilityIds} canChange={(id) => !isManager || (!self && managed.includes(id))} />

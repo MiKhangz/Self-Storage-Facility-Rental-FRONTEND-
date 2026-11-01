@@ -8,7 +8,7 @@ import { Roles } from '../../features/auth/roles';
 import Icon from '../../customer/components/Icon.jsx';
 import { formatDate, formatVnd } from '../../customer/components/format.js';
 import { Filters, PageHeader, SearchFilter, SelectFilter, Stat, Status, TableState, matches } from '../components/ui.jsx';
-import { useContracts, useInvoices } from '../queries.js';
+import { humanize, useContracts, useInvoices } from '../queries.js';
 import { useT } from '../../i18n/I18n.jsx';
 
 const OPEN = ['Issued', 'Overdue'];
@@ -172,7 +172,7 @@ export default function RecordPaymentPage() {
                                 {pay.isError && <div className="se-alert" role="alert">{errorMessage(pay.error)}</div>}
                                 <button type="submit" className="se-btn se-btn-primary se-btn-block" disabled={!valid || pay.isPending}>{pay.isPending ? tr('Recording…') : tr('Record {amount}', { amount: formatVnd(value) })}</button>
                             </form>
-                        ) : <div className="se-alert info">This invoice is {invoice.status.toLowerCase()}.</div>)}
+                        ) : <div className="se-alert info">{tr('This invoice is {status}.', { status: tr(humanize(invoice.status)).toLowerCase() })}</div>)}
                         <Payments invoice={invoice} canRefund={role === BOM} />
                         {role === BOM && invoice.status !== 'WrittenOff' && <Adjust invoice={invoice} />}
                         {[FS, FM, BOM, ADMIN].includes(role) && <Reminders invoice={invoice} role={role} />}

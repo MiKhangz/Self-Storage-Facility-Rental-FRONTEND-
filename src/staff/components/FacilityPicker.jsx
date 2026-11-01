@@ -63,7 +63,7 @@ export function FacilityPicker({ value, onChange, canChange = () => true, label 
                             {!shown.length && <li className="sa-muted">No facility matches “{search}”.</li>}
                         </ul>
                         <div className="sa-form-actions">
-                            <span className="sa-muted">{draft.length} selected</span>
+                            <span className="sa-muted">{tr('{n} selected', { n: draft.length })}</span>
                             <button type="button" className="se-btn se-btn-ghost" onClick={() => setDraft(draft.filter((id) => !canChange(id)))}>{tr('Clear')}</button>
                             <button type="button" className="se-btn se-btn-primary" onClick={() => { onChange(draft); close(); }}>{tr('Done')}</button>
                         </div>

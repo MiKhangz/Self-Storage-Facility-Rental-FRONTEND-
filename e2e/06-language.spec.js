@@ -16,6 +16,8 @@ test('E17 an admin switches the staff portal to Vietnamese and every page still 
   await loginStaff(page, ACCOUNTS.admin)
   await page.getByLabel('Language').selectOption('vi')
   await expect(page.getByRole('navigation').getByRole('link', { name: 'Bảng điều khiển' })).toBeVisible()
+  // Every month has its own label: letters like J stand for three months and cannot be translated.
+  await expect(page.locator('.sa-bar small')).toHaveText(Array.from({ length: 12 }, (_, i) => `T${i + 1}`))
 
   for (const [, vi] of PAGES) {
     await page.getByRole('navigation').getByRole('link', { name: new RegExp(`^${vi}( \\d+)?$`) }).click()
@@ -28,6 +30,13 @@ test('E17 an admin switches the staff portal to Vietnamese and every page still 
     }
   }
   expect(errors).toEqual([])
+
+  // The permission search looks through the words on screen, not the English behind them.
+  await page.getByRole('navigation').getByRole('link', { name: 'Người dùng & Vai trò' }).click()
+  await page.getByRole('button', { name: 'Ai được làm gì?' }).click()
+  await page.getByLabel('Tìm chức năng').fill('hoàn cọc')
+  await expect(page.getByRole('cell', { name: 'Quyết toán hoàn cọc' })).toBeVisible()
+  await page.getByRole('button', { name: 'Đóng' }).click()
 
   // The choice survives a reload, and switching back gives English again.
   await page.reload()

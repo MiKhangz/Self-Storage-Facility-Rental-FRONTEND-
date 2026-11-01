@@ -163,7 +163,7 @@ function FloorsAndUnits({ facilityId, onClose }) {
                     <Field label="Zone"><input maxLength={10} value={unit.zone} onChange={setU('zone')} /></Field>
                 </div>
                 {addUnit.isError && <div className="se-alert" role="alert">{errorMessage(addUnit.error)}</div>}
-                {addUnit.isSuccess && <div className="se-alert info" role="status">Unit {addUnit.data.unitCode} added and available to book.</div>}
+                {addUnit.isSuccess && <div className="se-alert info" role="status">{tr('Unit {code} added and available to book.', { code: addUnit.data.unitCode })}</div>}
                 <p className="se-hint">{tr('The rent comes from the size\'s price in Pricing & Policies.')}</p>
                 <div className="sa-form-actions"><button type="submit" className="se-btn se-btn-primary" disabled={addUnit.isPending || !list.length}>{addUnit.isPending ? tr('Adding…') : tr('Add unit')}</button></div>
             </form>
@@ -273,7 +273,7 @@ export default function FacilityDetailPage() {
                         <div className="sa-occupancy">
                             {floors.map((f) => (
                                 <div key={f.label}>
-                                    <div className="sa-occ-label"><span>{tr(f.label)}</span><span className="sa-muted">{tr('{used} / {total} rented', { used: f.rented, total: f.units.length })}</span></div>
+                                    <div className="sa-occ-label"><span>{f.label}</span><span className="sa-muted">{tr('{used} / {total} rented', { used: f.rented, total: f.units.length })}</span></div>
                                     <div className="se-progress flat"><span style={{ width: `${occupancy(f.units)}%` }} /></div>
                                 </div>
                             ))}
@@ -287,7 +287,7 @@ export default function FacilityDetailPage() {
                                 <thead><tr><th>{tr('Size')}</th><th>{tr('Total')}</th><th>{tr('Rented')}</th><th>{tr('Available')}</th><th>{tr('Price / mo')}</th></tr></thead>
                                 <tbody>
                                     {mix.map((m) => (
-                                        <tr key={m.label}><td className="strong">{tr(m.label)} · {m.units[0].areaM2} m²</td><td>{m.units.length}</td><td>{m.rented}</td><td>{m.free}</td><td className="price">{formatVnd(sizePrice[m.units[0].unitTypeId])}</td></tr>
+                                        <tr key={m.label}><td className="strong">{m.label} · {m.units[0].areaM2} m²</td><td>{m.units.length}</td><td>{m.rented}</td><td>{m.free}</td><td className="price">{formatVnd(sizePrice[m.units[0].unitTypeId])}</td></tr>
                                     ))}
                                 </tbody>
                             </table>

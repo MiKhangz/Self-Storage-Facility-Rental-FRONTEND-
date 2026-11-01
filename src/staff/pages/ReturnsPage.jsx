@@ -143,7 +143,7 @@ export default function ReturnsPage() {
                 </div>
                 {current && (
                     <aside className="se-panel sa-side-panel">
-                        <div className="sa-card-title"><h2>Unit {current.unitCode} <Status value={current.status} /></h2>
+                        <div className="sa-card-title"><h2>{tr('Unit')} {current.unitCode} <Status value={current.status} /></h2>
                             <button type="button" className="sa-close" onClick={() => setSelected(null)} aria-label={tr('Close')}><Icon name="arrowLeft" size={16} /></button></div>
                         <p className="sa-muted">{current.customerName} · {current.contractNumber}</p>
                         <dl className="se-kv">

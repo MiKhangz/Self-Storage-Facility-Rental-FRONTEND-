@@ -99,7 +99,7 @@ export default function WalkInBookingPage() {
                 <section className="se-panel sa-checkin-done">
                     <span className="se-confirm-icon"><Icon name="check" size={28} /></span>
                     <h2>{tr('Reservation {code} — unit {unit} reserved', { code: r.reservationCode, unit: r.unitCode })}</h2>
-                    <p className="sa-muted">Move-in {formatDate(r.moveInDate)} · {r.rentalMonths} month(s). Deposit {formatVnd(r.depositAmount)} recorded as paid in cash.</p>
+                    <p className="sa-muted">{tr('Move-in {date} · {n} month(s). Deposit {amount} recorded as paid in cash.', { date: formatDate(r.moveInDate), n: r.rentalMonths, amount: formatVnd(r.depositAmount) })}</p>
                     <p className="sa-muted">{tr('Next: draft the contract and let the customer sign, then complete the handover.')}</p>
                     <div className="sa-form-actions">
                         <Link to="/admin/handover" className="se-btn se-btn-primary">{tr('Go to handover')}</Link>

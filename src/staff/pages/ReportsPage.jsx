@@ -96,7 +96,7 @@ export default function ReportsPage() {
                         ))}
                         <TableState query={occupancy} rows={rows} cols={6} empty="No facilities in your scope." />
                     </tbody>
-                    <tfoot><tr><td className="strong">Total · {rows.length} facilities</td><td>{d.occupiedUnits ?? 0} / {d.totalUnits ?? 0}</td><td>{Math.round(d.occupancyRate ?? 0)}%</td>
+                    <tfoot><tr><td className="strong">{tr('Total')} · {tr('{n} facilities', { n: rows.length })}</td><td>{d.occupiedUnits ?? 0} / {d.totalUnits ?? 0}</td><td>{Math.round(d.occupancyRate ?? 0)}%</td>
                         <td className="price">{formatVnd(r.collected ?? 0)}</td><td>{formatVnd(r.refunded ?? 0)}</td><td>{formatVnd(r.net ?? 0)}</td></tr></tfoot>
                 </table>
             </div>
