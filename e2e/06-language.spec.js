@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'
-import { ACCOUNTS, loginStaff } from './helpers.js'
+import { ACCOUNTS, loginStaff, uniqueEmail } from './helpers.js'
 
 // Every admin sidebar page, by its English label (an admin sees all but the desk pages).
 const PAGES = [
@@ -37,4 +37,21 @@ test('E17 an admin switches the staff portal to Vietnamese and every page still 
   await expect(page.getByRole('navigation').getByRole('link', { name: 'Bảng điều khiển' })).toBeVisible()
   await page.getByLabel('Ngôn ngữ').selectOption('en')
   await expect(page.getByRole('navigation').getByRole('link', { name: 'Dashboard' })).toBeVisible()
+})
+
+test('E18 an error from the server follows the chosen language', async ({ page }) => {
+  const failLogin = async (password) => {
+    await page.goto('/login')
+    await page.getByLabel('Email').fill(uniqueEmail('nobody'))
+    await page.getByLabel(password).fill('Wrong-password-1')
+    await page.getByRole('button', { name: /^(Đăng nhập|Sign in)$/ }).click()
+  }
+
+  await failLogin(/^Mật khẩu/)
+  await expect(page.getByRole('alert')).toHaveText('Email hoặc mật khẩu không đúng.')
+
+  await page.goto('/')
+  await page.getByLabel('Ngôn ngữ').selectOption('en')
+  await failLogin(/^Password/)
+  await expect(page.getByRole('alert')).toHaveText('Invalid email or password.')
 })
