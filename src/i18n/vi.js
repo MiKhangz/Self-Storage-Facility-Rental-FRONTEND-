@@ -58,7 +58,7 @@ export default {
     "Search contract, customer or unit": "Tìm hợp đồng, khách hàng hoặc kho",
     "Balance due": "Còn nợ",
     "nothing due": "không có khoản đến hạn",
-    "Contact details are not available from the API yet.": "API chưa cung cấp thông tin liên hệ.",
+    "Contact details could not be loaded.": "Không tải được thông tin liên hệ.",
     "Monthly": "Hằng tháng",
     "Code": "Mã",
     "Size": "Cỡ",

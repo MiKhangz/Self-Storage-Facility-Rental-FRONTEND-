@@ -54,6 +54,9 @@
 
 /* Browser surfaces take the palette: focus ring, selection, caret, figures */
 .se-page :focus-visible { outline: 2px solid var(--se-primary); outline-offset: 2px; }
+/* The field draws the ring around its icon and input, so the input adds no second box. */
+.se-input input:focus-visible, .se-input select:focus-visible, .se-field input:focus-visible, .se-field select:focus-visible { outline: 0; }
+.se-input input:-webkit-autofill { -webkit-box-shadow: 0 0 0 100px #fff inset; -webkit-text-fill-color: var(--se-ink); }
 .se-footer :focus-visible, .se-cta :focus-visible, .se-ticket-head :focus-visible { outline-color: var(--se-primary-light); }
 .se-page ::selection { background: var(--se-primary-tint); color: var(--se-ink); }
 .se-page input, .se-page textarea { caret-color: var(--se-primary); }

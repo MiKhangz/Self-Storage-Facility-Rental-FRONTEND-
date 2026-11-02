@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
+import { customersApi } from '../../api/generated';
 import Icon from '../../customer/components/Icon.jsx';
 import { formatDate, formatVnd } from '../../customer/components/format.js';
 import { initials } from '../../customer/layout/CustomerLayout.jsx';
@@ -19,22 +21,23 @@ export function onTimeShare(invoices) {
 }
 
 /**
- * A14: one customer, pieced together from their contracts, reservations, invoices and tickets.
- * ponytail: the API has no customer endpoint, so contact details (phone, email, CCCD) cannot be shown yet.
+ * A14: one customer: their contact details, then their contracts, reservations, invoices and tickets.
  */
 export default function CustomerPage() {
     const tr = useT();
     const customerId = Number(useParams().customerId);
     const [tab, setTab] = useState('Contracts');
+    const customer = useQuery({ queryKey: ['customers', customerId], queryFn: () => customersApi.getById(customerId) });
     const contracts = (useContracts().data ?? []).filter((c) => c.customerId === customerId);
     const reservations = (useReservations().data ?? []).filter((r) => r.customerId === customerId);
     const invoices = (useInvoices().data ?? []).filter((i) => i.customerId === customerId);
     const ticketsQuery = useTickets();
     const tickets = (ticketsQuery.data ?? []).filter((t) => t.customerId === customerId);
-    const name = contracts[0]?.customerName ?? reservations[0]?.customerName ?? tickets[0]?.customerName ?? `${tr('Customer')} #${customerId}`;
+    const name = customer.data?.fullName ?? contracts[0]?.customerName ?? reservations[0]?.customerName ?? tickets[0]?.customerName ?? `${tr('Customer')} #${customerId}`;
     const active = contracts.filter((c) => c.status === 'Active');
     const open = invoices.filter((i) => ['Issued', 'Overdue'].includes(i.status));
     const onTime = onTimeShare(invoices);
+    const contact = customer.data && [customer.data.email, customer.data.phoneNumber, customer.data.citizenId && `CCCD ${customer.data.citizenId}`].filter(Boolean).join(' · ');
 
     return (
         <>
@@ -46,7 +49,7 @@ export default function CustomerPage() {
                 <Stat icon="clock" tone={open.some((i) => i.status === 'Overdue') ? 'bad' : ''} label="Outstanding" value={formatVnd(open.reduce((s, i) => s + (i.outstandingAmount ?? 0), 0))} note={open[0] ? tr('due {date}', { date: formatDate(open[0].dueDate) }) : tr('nothing due')} />
                 <Stat icon="check" label="On-time payments" value={onTime == null ? '—' : `${onTime}%`} />
             </div>
-            <div className="sa-person sa-person-lg"><span className="se-avatar">{initials(name)}</span><span><strong>{name}</strong><small>{tr('Contact details are not available from the API yet.')}</small></span></div>
+            <div className="sa-person sa-person-lg"><span className="se-avatar">{initials(name)}</span><span><strong>{name}</strong><small>{customer.isError ? tr('Contact details could not be loaded.') : contact}</small></span></div>
             <div className="se-tabs se-tabs-line" role="tablist">
                 {TABS.map((t) => <button key={t} role="tab" aria-selected={tab === t} className={tab === t ? 'active' : ''} onClick={() => setTab(t)}>{tr(t)}</button>)}
             </div>
